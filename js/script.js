@@ -40,7 +40,7 @@ appendPageLinks();
 ***/
 function showPage(pageNum){
    for (let i = 0; i < ul.children.length; i++){
-      if(i + 1 > pageNum * 10 - 10 && i < pageNum * 10){
+      if(i + 1 > (pageNum * 10) - 10 && i < pageNum * 10){
          ul.children[i].style.display = '';
       }else{
          ul.children[i].style.display = 'none';
@@ -67,19 +67,20 @@ function appendPageLinks(){
    }
    div.appendChild(buttonList);
    document.querySelector('.page').appendChild(div);
+
+   div.addEventListener('click', (e) =>{
+      if(e.target.tagName === 'A'){
+         //change active class to clicked link
+         for (let i = 0; i < buttonList.children.length; i++){
+            buttonList.children[i].firstElementChild.className = '';
+         }
+         e.target.className = 'active';
+         showPage(e.target.textContent);
+      }
+   });
+   
 }
 
-div.addEventListener('click', (e) =>{
-   if(e.target.tagName === 'A'){
-      //change active class to clicked link
-      const ul = e.target.parentNode.parentNode;
-      for (let i = 0; i < ul.children.length; i++){
-         ul.children[i].firstElementChild.className = '';
-      }
-      e.target.className = 'active';
-      showPage(e.target.textContent);
-   }
-});
 
 
 
