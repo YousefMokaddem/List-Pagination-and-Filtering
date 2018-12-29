@@ -16,8 +16,12 @@ FSJS project 2 - List Filter and Pagination
    will only be used inside of a function, then it can be locally 
    scoped to that function.
 ***/
+const ul = document.querySelector('.student-list');
+const div = document.createElement('div');
+div.className = 'pagination';
 
-
+showPage(1);
+appendPageLinks();
 
 
 /*** 
@@ -34,6 +38,15 @@ FSJS project 2 - List Filter and Pagination
        that will be passed into the parens later when you call or 
        "invoke" the function 
 ***/
+function showPage(pageNum){
+   for (let i = 0; i < ul.children.length; i++){
+      if(i + 1 > pageNum * 10 - 10 && i < pageNum * 10){
+         ul.children[i].style.display = '';
+      }else{
+         ul.children[i].style.display = 'none';
+      }
+   }
+}
 
 
 
@@ -42,6 +55,31 @@ FSJS project 2 - List Filter and Pagination
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
+function appendPageLinks(){
+   const buttonList = document.createElement('ul');
+   for (let i = 0; i < Math.ceil(ul.children.length/10); i++){
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      if (i == 0){a.className = 'active';}
+      a.textContent = i + 1;
+      li.appendChild(a);
+      buttonList.appendChild(li);
+   }
+   div.appendChild(buttonList);
+   document.querySelector('.page').appendChild(div);
+}
+
+div.addEventListener('click', (e) =>{
+   if(e.target.tagName === 'A'){
+      //change active class to clicked link
+      const ul = e.target.parentNode.parentNode;
+      for (let i = 0; i < ul.children.length; i++){
+         ul.children[i].firstElementChild.className = '';
+      }
+      e.target.className = 'active';
+      showPage(e.target.textContent);
+   }
+});
 
 
 
