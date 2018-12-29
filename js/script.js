@@ -17,8 +17,22 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 const ul = document.querySelector('.student-list');
-const div = document.createElement('div');
-div.className = 'pagination';
+const buttonDiv = document.createElement('div');
+const searchDiv = document.createElement('div');
+const input = document.createElement('input');
+const searchButton = document.createElement('button');
+
+buttonDiv.className = 'pagination';
+searchDiv.className = 'student-search';
+input.placeholder = 'Search for students...'
+searchButton.textContent = 'Search';
+
+searchDiv.appendChild(input);
+searchDiv.appendChild(searchButton);
+document.querySelector('.page-header').appendChild(searchDiv);
+
+
+
 
 showPage(1);
 appendPageLinks();
@@ -65,10 +79,10 @@ function appendPageLinks(){
       li.appendChild(a);
       buttonList.appendChild(li);
    }
-   div.appendChild(buttonList);
-   document.querySelector('.page').appendChild(div);
+   buttonDiv.appendChild(buttonList);
+   document.querySelector('.page').appendChild(buttonDiv);
 
-   div.addEventListener('click', (e) =>{
+   buttonDiv.addEventListener('click', (e) =>{
       if(e.target.tagName === 'A'){
          //change active class to clicked link
          for (let i = 0; i < buttonList.children.length; i++){
