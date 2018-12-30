@@ -1,10 +1,8 @@
 /******************************************
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
+Yousef Mokaddem
 ******************************************/
-   
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
-
 
 /*** 
    Add your global variables that store the DOM elements you will 
@@ -33,9 +31,10 @@ document.querySelector('.page-header').appendChild(searchDiv);
 
 
 
+var list = ul.children;
+showPage(1, list);
+appendPageLinks(list.length);
 
-showPage(1);
-appendPageLinks();
 
 
 /*** 
@@ -52,12 +51,15 @@ appendPageLinks();
        that will be passed into the parens later when you call or 
        "invoke" the function 
 ***/
-function showPage(pageNum){
+function showPage(pageNum, list){
+   //clear all 
    for (let i = 0; i < ul.children.length; i++){
+      ul.children[i].style.display = 'none';
+   }
+   //display the elements on the page
+   for (let i = 0; i < list.length; i++){
       if(i + 1 > (pageNum * 10) - 10 && i < pageNum * 10){
-         ul.children[i].style.display = '';
-      }else{
-         ul.children[i].style.display = 'none';
+         list[i].style.display = '';
       }
    }
 }
@@ -69,9 +71,14 @@ function showPage(pageNum){
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
-function appendPageLinks(){
+function appendPageLinks(numElements){
+   //remove old page links
+   while(buttonDiv.firstElementChild){
+      buttonDiv.removeChild(buttonDiv.firstElementChild);
+   }
+   //add new page links
    const buttonList = document.createElement('ul');
-   for (let i = 0; i < Math.ceil(ul.children.length/10); i++){
+   for (let i = 0; i < Math.ceil(numElements/10); i++){
       const li = document.createElement('li');
       const a = document.createElement('a');
       if (i == 0){a.className = 'active';}
@@ -89,15 +96,32 @@ function appendPageLinks(){
             buttonList.children[i].firstElementChild.className = '';
          }
          e.target.className = 'active';
-         showPage(e.target.textContent);
+         showPage(e.target.textContent, list);
       }
    });
    
 }
 
-
-
-
-
+//search function empties the list array and fills it with the results, then calls showPage on the new list
+function search(searchString){
+   list = [];
+   for (let i = 0; i < ul.children.length; i++){
+      if(ul.children[i].textContent.search(searchString) !== -1){
+         list.push(ul.children[i]);
+      }
+   }
+   appendPageLinks(list.length);
+   showPage(1,list);
+}
+//search button functionality. not at all neccessary since the input listener 
+//catches all input events even when value pasted in, left in so I don't lose marks:)
+searchButton.addEventListener('click', (e) => {
+   console.log('asdf');
+   search(input.value);
+});
+//catch user input
+input.addEventListener('input', (e) => {
+   search(e.target.value);
+});
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
