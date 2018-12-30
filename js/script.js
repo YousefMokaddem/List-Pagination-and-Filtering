@@ -38,18 +38,7 @@ appendPageLinks(list.length);
 
 
 /*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
+   sets display properties based on the pageNum.
 ***/
 function showPage(pageNum, list){
    //clear all 
@@ -71,6 +60,7 @@ function showPage(pageNum, list){
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
+/*creates page links based on the int numElements passed into the func*/
 function appendPageLinks(numElements){
    //remove old page links
    while(buttonDiv.firstElementChild){
@@ -124,4 +114,3 @@ input.addEventListener('input', (e) => {
    search(e.target.value);
 });
 
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
